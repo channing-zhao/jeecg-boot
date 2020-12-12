@@ -163,8 +163,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/designer/**", "anon");
         filterChainDefinitionMap.put("/plug-in/**", "anon");
 
-        //排除Online请求
-        filterChainDefinitionMap.put("/auto/cgform/**", "anon");
+        //排除前台请求
+        filterChainDefinitionMap.put("/trace/**", "anon");
         //FineReport报表
         filterChainDefinitionMap.put("/ReportServer**", "anon");
 

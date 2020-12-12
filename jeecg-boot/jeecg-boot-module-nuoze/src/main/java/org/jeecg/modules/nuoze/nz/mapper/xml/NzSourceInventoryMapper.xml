@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.nuoze.nz.mapper.NzSourceInventoryMapper">
+    <update id="updateAmount" parameterType="org.jeecg.modules.nuoze.nz.entity.NzSourceInventory">
+        update nz_source_inventory
+        <set>
+            <if test="updateBy!=null">
+                update_by=#{updateBy},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            amount = amount + (#{amount})
+        </set>
+        where source_id=#{sourceId}
+    </update>
+</mapper>
