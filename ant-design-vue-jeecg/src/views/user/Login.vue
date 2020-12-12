@@ -10,21 +10,16 @@
             <a-input
               size="large"
               v-decorator="['username',validatorRules.username,{ validator: this.handleUsernameOrEmail }]"
-              type="text"
-              placeholder="请输入帐户名 / admin">
+              type="text" >
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
 
+
           <a-form-item>
-            <a-input
-              v-decorator="['password',validatorRules.password]"
-              size="large"
-              type="password"
-              autocomplete="false"
-              placeholder="密码 / 123456">
-              <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
+           
+             <a-input-password  v-decorator="['password',validatorRules.password]"
+              size="large" > <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/></a-input-password>
           </a-form-item>
 
           <a-row :gutter="0">
@@ -48,49 +43,12 @@
 
 
         </a-tab-pane>
-        <a-tab-pane key="tab2" tab="手机号登录">
-          <a-form-item>
-            <a-input
-              v-decorator="['mobile',validatorRules.mobile]"
-              size="large"
-              type="text"
-              placeholder="手机号">
-              <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
-          </a-form-item>
-
-          <a-row :gutter="16">
-            <a-col class="gutter-row" :span="16">
-              <a-form-item>
-                <a-input
-                  v-decorator="['captcha',validatorRules.captcha]"
-                  size="large"
-                  type="text"
-                  placeholder="请输入验证码">
-                  <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col class="gutter-row" :span="8">
-              <a-button
-                class="getCaptcha"
-                tabindex="-1"
-                :disabled="state.smsSendBtn"
-                @click.stop.prevent="getCaptcha"
-                v-text="!state.smsSendBtn && '获取验证码' || (state.time+' s')"></a-button>
-            </a-col>
-          </a-row>
-        </a-tab-pane>
+       
       </a-tabs>
 
       <a-form-item>
         <a-checkbox v-decorator="['rememberMe', {initialValue: true, valuePropName: 'checked'}]" >自动登录</a-checkbox>
-        <router-link :to="{ name: 'alteration'}" class="forge-password" style="float: right;">
-          忘记密码
-        </router-link>
-       <router-link :to="{ name: 'register'}" class="forge-password" style="float: right;margin-right: 10px" >
-          注册账户
-        </router-link>
+       
       </a-form-item>
 
       <a-form-item style="margin-top:24px">
@@ -105,12 +63,7 @@
         </a-button>
       </a-form-item>
 
-      <div class="user-login-other">
-        <span>其他登录方式</span>
-        <a @click="onThirdLogin('github')" title="github"><a-icon class="item-icon" type="github"></a-icon></a>
-        <a @click="onThirdLogin('wechat_enterprise')" title="企业微信"><a-icon class="item-icon" type="wechat"></a-icon></a>
-        <a @click="onThirdLogin('dingtalk')" title="钉钉"><a-icon class="item-icon" type="dingding"></a-icon></a>
-      </div>
+
     </a-form>
 
     <two-step-captcha
@@ -233,14 +186,12 @@
         // 使用账户密码登录
         if (that.customActiveKey === 'tab1') {
           that.form.validateFields([ 'username', 'password','inputCode', 'rememberMe' ], { force: true }, (err, values) => {
+            
             if (!err) {
               loginParams.username = values.username
-              // update-begin- --- author:scott ------ date:20190805 ---- for:密码加密逻辑暂时注释掉，有点问题
-              //loginParams.password = md5(values.password)
-              //loginParams.password = encryption(values.password,that.encryptedString.key,that.encryptedString.iv)
-              loginParams.password = values.password
+              
+              loginParams.password =  values.password
               loginParams.remember_me = values.rememberMe
-              // update-begin- --- author:scott ------ date:20190805 ---- for:密码加密逻辑暂时注释掉，有点问题
               loginParams.captcha = that.inputCodeContent
               loginParams.checkKey = that.currdatetime
               console.log("登录参数",loginParams)
