@@ -11,7 +11,7 @@ export const asyncRouterMap = [
     name: 'dashboard',
     component: TabLayout,
     meta: { title: '首页' },
-    redirect: '/dashboard/analysis',
+    redirect: '/nuoze/NzBaseList',
     children: [
 
       // // dashboard
@@ -226,7 +226,7 @@ export const asyncRouterMap = [
       //     }
       //   ]
       // },
-      //
+      //nuoze\NzSourceTraceFront
       // // account
       // {
       //   path: '/account',
@@ -320,6 +320,11 @@ export const constantRouterMap = [
         name: 'alteration',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/Alteration')
       },
+      {
+        path: 'NzSourceTraceFront',
+        name: 'NzSourceTraceFront',
+        component: () => import('@/views/nuoze/NzSourceTraceFront')
+      }
     ]
   },
 
