@@ -130,10 +130,10 @@
             align:"center",
             dataIndex: 'name'
           },
-          {
-            title:'说明',
+           {
+            title:'产品',
             align:"center",
-            dataIndex: 'remark'
+            dataIndex: 'productId_dictText'
           },
           {
             title:'原药材批次',

@@ -29,6 +29,16 @@
             </a-form-item>
           </a-col>
            <a-col :span="12">
+            <a-form-item label="流水号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['unit']" placeholder="请输入流水号"/>
+            </a-form-item>
+          </a-col>
+           <a-col :span="12">
+            <a-form-item label="运输方式" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['transport']" placeholder="请输入运输方式"/>
+            </a-form-item>
+          </a-col>
+           <a-col :span="12">
             <a-form-item label="负责人" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-select-user-by-dep v-decorator="['createBy']"/>
             </a-form-item>
@@ -174,7 +184,7 @@
          
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'sourceIds','createBy','createTime','sourceBatchIds','amount','type'))
+          this.form.setFieldsValue(pick(this.model,'sourceIds','unit','transport','createBy','createTime','sourceBatchIds','amount','type'))
         })
       },
       //渲染流程表单数据
@@ -222,7 +232,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'sourceIds','createBy','createTime','sourceBatchIds','amount','type'))
+        this.form.setFieldsValue(pick(row,'sourceIds','unit','transport','createBy','createTime','sourceBatchIds','amount','type'))
       },
     }
   }

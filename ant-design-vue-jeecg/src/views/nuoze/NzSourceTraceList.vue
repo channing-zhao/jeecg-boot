@@ -1,9 +1,28 @@
 <template>
   <a-card :bordered="false">
-    <!-- 查询区域 -->
+  <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+
+           <a-col :md="6" :sm="5">
+            <a-form-item label="原药材" >
+              <j-search-select-tag v-model="queryParam.sourceIds" dict="nz_source,name,id" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="5">
+            <a-form-item label="原药材批次" >
+              <j-search-select-tag v-model="queryParam.sourceBatchIds" dict="nz_source_batch,name,id" />
+            </a-form-item>
+          </a-col>
+         
+           <a-col :md="6" :sm="5">
+            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+             
+            </span>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -98,11 +117,13 @@
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import NzSourceTraceModal from './modules/NzSourceTraceModal'
   import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
-
+  import JSearchSelectTag from '@/components/dict/JSearchSelectTag'
+ 
   export default {
     name: 'NzSourceTraceList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
+      JSearchSelectTag,
       NzSourceTraceModal
     },
     data () {
@@ -136,7 +157,7 @@
             dataIndex: 'sourceBatchIds_dictText'
           },
            {
-            title:'操作环节',
+            title:'工艺',
             align:"center",
             dataIndex: 'node_dictText'
           },

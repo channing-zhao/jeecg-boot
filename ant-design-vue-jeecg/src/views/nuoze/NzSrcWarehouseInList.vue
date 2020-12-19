@@ -1,9 +1,40 @@
 <template>
   <a-card :bordered="false">
-    <!-- 查询区域 -->
+     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+
+           <a-col :md="6" :sm="5">
+            <a-form-item label="原药材" >
+              <j-search-select-tag v-model="queryParam.sourceIds" dict="nz_source,name,id" />
+            </a-form-item>
+          </a-col>
+           <a-col :md="6" :sm="5">
+            <a-form-item label="原药材批次" >
+              <j-search-select-tag v-model="queryParam.sourceBatchIds" dict="nz_source_batch,name,id" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="5">
+            <a-form-item label="操作">
+              <a-select v-model="queryParam.type" placeholder="出库 | 入库">
+                <a-select-option value="">请选择</a-select-option>
+                <a-select-option value="0">出库</a-select-option>
+                <a-select-option value="1">入库</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+
+          
+
+    
+           <a-col :md="6" :sm="5">
+            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+             
+            </span>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -11,12 +42,12 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button @click="handleAdd" type="primary" icon="plus" v-has="'srcInventory:add'">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('原药材出入库记录')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <a-dropdown v-if="selectedRowKeys.length > 0"  v-has="'srcInventory:add'">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
@@ -98,12 +129,14 @@
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import NzSrcWarehouseInModal from './modules/NzSrcWarehouseInModal'
   import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
-
+  import JSearchSelectTag from '@/components/dict/JSearchSelectTag' 
   export default {
     name: 'NzSrcWarehouseInList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
+       JSearchSelectTag,
       NzSrcWarehouseInModal
+      
     },
     data () {
       return {
@@ -146,7 +179,11 @@
               return text=='1' ? "入库" : "出库"
             }
           },
-         
+         {
+           title:'运输方式',
+           align:"center",
+           dataIndex: 'transport'
+          },
            
           {
             title: '操作',

@@ -3,16 +3,17 @@
     <j-form-container :disabled="formDisabled">
       <a-form :form="form" slot="detail">
         <a-row>
+         <a-col :span="12">
+            <a-form-item label="工艺" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-dict-select-tag type="list" v-decorator="['node']" :trigger-change="true" dictCode="yclsygc" placeholder="请选择工艺"/>
+            </a-form-item>
+          </a-col>
           <a-col :span="12">
             <a-form-item label="流水号" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['optnum']" placeholder="按批次规则填写流水号"></a-input>
             </a-form-item>
           </a-col>
-           <a-col :span="12">
-            <a-form-item label="操作环节" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['node']" :trigger-change="true" dictCode="yclsygc" placeholder="请选择操作环节"/>
-            </a-form-item>
-          </a-col>
+          
            <a-col :span="12">
             <a-form-item label="原药材批次" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-search-select-tag v-decorator="['sourceBatchIds']" dict="nz_source_batch,name,id" />

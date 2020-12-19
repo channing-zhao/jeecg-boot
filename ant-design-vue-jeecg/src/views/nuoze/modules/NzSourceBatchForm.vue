@@ -122,7 +122,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'name','remark','areaIds'))
+          this.form.setFieldsValue(pick(this.model,'name','sourceId','remark','areaIds'))
         })
       },
       //渲染流程表单数据
@@ -168,7 +168,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'name','remark','areaIds'))
+        this.form.setFieldsValue(pick(row,'name','sourceId','remark','areaIds'))
       },
     }
   }

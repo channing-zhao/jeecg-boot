@@ -23,6 +23,16 @@
               <j-dict-select-tag type="radio" v-decorator="['type']" :trigger-change="true" dictCode="iowh" />
             </a-form-item>
           </a-col>
+          <a-col :span="12">
+            <a-form-item label="流水号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['unit']" placeholder="请输入流水号" style="width: 100%"/>
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item label="运输方式" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['transport']" placeholder="请输入运输方式" style="width: 100%"/>
+            </a-form-item>
+          </a-col>
            <a-col :span="12">
             <a-form-item label="负责人" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-select-user-by-dep v-decorator="['createBy']"/>
@@ -143,7 +153,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'productId','productBatchIds','amount','type','createBy','createTime'))
+          this.form.setFieldsValue(pick(this.model,'productId','productBatchIds','amount','type','unit','transport','createBy','createTime'))
         })
       },
       //渲染流程表单数据
@@ -189,7 +199,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'productId','productBatchIds','amount','type','createBy','createTime'))
+        this.form.setFieldsValue(pick(row,'productId','productBatchIds','amount','type','unit','transport','createBy','createTime'))
       },
     }
   }

@@ -1,12 +1,34 @@
 <template>
   <a-card :bordered="false">
-    <!-- 查询区域 -->
+ <!-- 查询区域 -->
+ <!--
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+
+           <a-col :md="6" :sm="5">
+            <a-form-item label="产品" >
+              <j-search-select-tag v-model="queryParam.productId" dict="nz_product,name,id" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="5">
+            <a-form-item label="产品批次" >
+              <j-search-select-tag v-model="queryParam.productBatchIds" dict="nz_prod_batch,name,id" />
+            </a-form-item>
+          </a-col>
+         
+           <a-col :md="6" :sm="5">
+            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+             
+            </span>
+          </a-col>
         </a-row>
       </a-form>
     </div>
+
+    -->
     <!-- 查询区域-END -->
 
     <!-- 操作按钮区域 -->
@@ -111,11 +133,7 @@
             align:"center",
             dataIndex: 'name'
           },
-          {
-            title:'编号',
-            align:"center",
-            dataIndex: 'code'
-          },
+          
          
           {
             title:'科目',

@@ -1,9 +1,28 @@
 <template>
   <a-card :bordered="false">
-    <!-- 查询区域 -->
+   <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+
+           <a-col :md="6" :sm="5">
+            <a-form-item label="产品" >
+              <j-search-select-tag v-model="queryParam.productId" dict="nz_product,name,id" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="5">
+            <a-form-item label="产品批次" >
+              <j-search-select-tag v-model="queryParam.productBatchId" dict="nz_prod_batch,name,id" />
+            </a-form-item>
+          </a-col>
+         
+           <a-col :md="6" :sm="5">
+            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+             
+            </span>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -98,11 +117,15 @@
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import NzProTraceModal from './modules/NzProTraceModal'
   import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
-
+  import JInput from '@/components/jeecg/JInput'
+  import JSearchSelectTag from '@/components/dict/JSearchSelectTag'
+ 
   export default {
     name: 'NzProTraceList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
+      JInput,
+      JSearchSelectTag,
       NzProTraceModal
     },
     data () {
@@ -128,7 +151,7 @@
           {
             title:'产品批次',
             align:"center",
-            dataIndex: 'productBatchId'
+            dataIndex: 'productBatchId_dictText'
           },
           {
             title:'产品',
@@ -136,7 +159,7 @@
             dataIndex: 'productId_dictText'
           },
           {
-            title:'当前环节',
+            title:'工艺',
             align:"center",
             dataIndex: 'node_dictText'
           },

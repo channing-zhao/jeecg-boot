@@ -8,7 +8,12 @@
               <a-input v-decorator="['name']" placeholder="请输入名称"></a-input>
             </a-form-item>
           </a-col>
-        
+         <a-col :span="12">
+            <a-form-item label="产品" :labelCol="labelCol" :wrapperCol="wrapperCol">
+             <j-dict-select-tag type="list"  v-decorator="['productId']" :trigger-change="true" dictCode="nz_product,name,id" placeholder="请选择产品"/>
+            </a-form-item>
+          </a-col>
+
           <a-col :span="12">
             <a-form-item label="原药材批次" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-multi-select-tag type="list_multi" v-decorator="['sourceBatchIds']" :trigger-change="true" dictCode="nz_source_batch,name,id" placeholder="请选择原药材批次"/>
@@ -118,7 +123,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'name','remark','sourceBatchIds'))
+          this.form.setFieldsValue(pick(this.model,'name','productId','remark','sourceBatchIds'))
         })
       },
       //渲染流程表单数据
@@ -164,7 +169,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'name','remark','sourceBatchIds'))
+        this.form.setFieldsValue(pick(row,'name','productId','remark','sourceBatchIds'))
       },
     }
   }

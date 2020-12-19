@@ -128,11 +128,7 @@
             align:"center",
             dataIndex: 'head_dictText'
           },
-          {
-            title:'电话',
-            align:"center",
-            dataIndex: 'tel'
-          },
+         
           {
             title:'地址',
             align:"center",
@@ -141,16 +137,13 @@
           {
             title:'面积',
             align:"center",
-            dataIndex: 'area'
-          },
-          {
-            title:'占比',
-            align:"center",
-            dataIndex: 'percentage',
+            dataIndex: 'area',
             customRender:function (text) {
-              return text +"%"
+              if(text){return text +"公顷"}else{return text}
+              
             }
           },
+         
          /** {
             title:'描述',
             align:"center",
@@ -162,7 +155,22 @@
             align:"center",
             dataIndex: 'pic',
             scopedSlots: {customRender: 'imgSlot'}
-          },*/
+          },
+           {
+            title:'占比',
+            align:"center",
+            dataIndex: 'percentage',
+            customRender:function (text) {
+              if(text){return text +"%"}else{return text}
+              
+            }
+          },
+           {
+            title:'电话',
+            align:"center",
+            dataIndex: 'tel'
+          },
+          */
           {
             title: '操作',
             dataIndex: 'action',

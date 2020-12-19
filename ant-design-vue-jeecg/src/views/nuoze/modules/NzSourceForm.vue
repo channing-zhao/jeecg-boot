@@ -8,12 +8,14 @@
               <a-input v-decorator="['name']" placeholder="请输入名称"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :span="12">
+          
+       
+          <!--
+             <a-col :span="12">
             <a-form-item label="编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['code']" placeholder="请输入编号"></a-input>
             </a-form-item>
           </a-col>
-          <!--
           <a-col :span="12">
             <a-form-item label="种类" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['typeId']" placeholder="请输入种类"></a-input>
@@ -142,7 +144,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'name','code','typeId','pic','effect','remark','kemu'))
+          this.form.setFieldsValue(pick(this.model,'name', 'typeId','pic','effect','remark','kemu'))
         })
       },
       //渲染流程表单数据
@@ -188,7 +190,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'name','code','typeId','pic','effect','remark','kemu'))
+        this.form.setFieldsValue(pick(row,'name', 'typeId','pic','effect','remark','kemu'))
       },
     }
   }

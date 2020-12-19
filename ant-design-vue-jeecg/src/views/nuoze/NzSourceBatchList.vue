@@ -132,12 +132,17 @@
               return parseInt(index)+1;
             }
           },
+ 
           {
             title:'批次名称',
             align:"center",
             dataIndex: 'name'
           },
-         
+          {
+            title:'原药材',
+            align:"center",
+            dataIndex: 'sourceId_dictText'
+          },
           {
             title:'种植基地',
             align:"center",
