@@ -5,32 +5,32 @@
         <a-row>
          <a-col :span="12">
             <a-form-item label="工艺" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['node']" :trigger-change="true" dictCode="cplsygc" placeholder="请选择工艺"/>
+              <j-dict-select-tag type="list" v-decorator="['node',{rules: [{ required: true, message: '请选择工艺'}]}]" :trigger-change="true" dictCode="cplsygc" placeholder="请选择工艺"/>
             </a-form-item>
           </a-col>
          <a-col :span="12">
             <a-form-item label="流水号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['optnum']" placeholder="按批次规则填写流水号"></a-input>
+              <a-input v-decorator="['optnum',{rules: [{ required: true, message: '请输入流水号'}]}]" placeholder="按批次规则填写流水号"></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item label="负责人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-select-user-by-dep v-decorator="['createBy']"/>
+              <j-select-user-by-dep v-decorator="['createBy',{rules: [{ required: true, message: '请输入负责人'}]}]"/>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item label="操作日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-date placeholder="请选择操作日期" v-decorator="['createTime']" :trigger-change="true" :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" style="width: 100%"/>
+              <j-date placeholder="请选择操作日期" v-decorator="['createTime',{rules: [{ required: true, message: '请选择时间'}]}]" :trigger-change="true" :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" style="width: 100%"/>
             </a-form-item>
           </a-col>
            <a-col :span="12">
             <a-form-item label="产品" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-search-select-tag v-decorator="['productId']" dict="nz_product,name,id" />
+              <j-search-select-tag v-decorator="['productId',{rules: [{ required: true, message: '请选择产品'}]}]" dict="nz_product,name,id" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item label="产品批次" :labelCol="labelCol" :wrapperCol="wrapperCol">
-             <j-search-select-tag v-decorator="['productBatchId']" placeholder="请选择产品批次" dict="nz_prod_batch,name,id" />
+             <j-search-select-tag v-decorator="['productBatchId',{rules: [{ required: true, message: '请选择产品批次'}]}]" placeholder="请选择产品批次" dict="nz_prod_batch,name,id" />
             </a-form-item>
           </a-col>
          

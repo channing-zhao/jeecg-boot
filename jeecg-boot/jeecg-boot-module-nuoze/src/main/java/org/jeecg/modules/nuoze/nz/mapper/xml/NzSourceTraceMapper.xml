@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.nuoze.nz.mapper.NzSourceTraceMapper">
-
+    <!-- 根据产品批次号查询原药材溯源信息 -->
+    <select id="SelectByPrdcode"  resultType="org.jeecg.modules.nuoze.nz.entity.NzSourceTrace">
+		select * from nz_source_trace st
+	where LOCATE(st.source_batch_ids,(select source_batch_ids from nz_prod_batch pb where pb.id= #{batchid}))>0
+order by st.source_batch_ids  ,st.create_time asc
+	</select>
 </mapper>

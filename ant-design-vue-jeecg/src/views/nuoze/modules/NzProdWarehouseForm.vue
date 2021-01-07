@@ -5,12 +5,12 @@
         <a-row>
          <a-col :span="12">
             <a-form-item label="产品" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-search-select-tag v-decorator="['productId']" dict="nz_product,name,id" />
+              <j-search-select-tag   dict="nz_product,name,id" v-decorator="['productId',{rules: [{ required: true, message: '请选择产品'}]}]"/>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item label="产品批次" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-multi-select-tag type="list_multi" v-decorator="['productBatchIds']" :trigger-change="true" dictCode="nz_prod_batch,name,id" placeholder="请选择产品批次"/>
+              <j-multi-select-tag type="list_multi" v-decorator="['productBatchIds',{rules: [{ required: true, message: '请选择产品批次'}]}]"   :trigger-change="true" dictCode="nz_prod_batch,name,id" placeholder="请选择产品批次"/>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -20,8 +20,16 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="操作" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-radio-group name="type" v-decorator="[ 'type', {initialValue:1}]">
+                <a-radio :value="1">入库</a-radio>
+                <a-radio :value="0">出库</a-radio>
+              </a-radio-group>
+             </a-form-item>  
+<!--
+            <a-form-item label="操作" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-dict-select-tag type="radio" v-decorator="['type']" :trigger-change="true" dictCode="iowh" />
             </a-form-item>
+ -->           
           </a-col>
           <a-col :span="12">
             <a-form-item label="流水号" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -109,8 +117,9 @@
         validatorRules: {
           amount: {
             rules: [
-              { required: false},
+              { required: true,message: '请输入数量'},
               { pattern: /^-?\d+\.?\d*$/, message: '请输入数字!'},
+              
             ]
           },
         },

@@ -1,9 +1,28 @@
 <template>
   <a-card :bordered="false">
-    <!-- 查询区域 -->
+     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+
+           <a-col :md="6" :sm="5">
+            <a-form-item label="产品" >
+              <j-search-select-tag v-model="queryParam.productId" dict="nz_product,name,id" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="5">
+            <a-form-item label="批次号" >
+              <j-search-select-tag v-model="queryParam.name" dict="nz_prod_batch,name,name" />
+            </a-form-item>
+          </a-col>
+         
+           <a-col :md="6" :sm="5">
+            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+             
+            </span>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -104,11 +123,13 @@
   import NzProdBatchModal from './modules/NzProdBatchModal'
   import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
   import {putAction,getFileAccessHttpUrl} from '@/api/manage';
+  import JSearchSelectTag from '@/components/dict/JSearchSelectTag'
   export default {
     name: 'NzProdBatchList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      NzProdBatchModal
+      NzProdBatchModal ,
+      JSearchSelectTag,
     },
     data () {
       return {
@@ -126,7 +147,7 @@
             }
           },
           {
-            title:'名称',
+            title:'批次号',
             align:"center",
             dataIndex: 'name'
           },

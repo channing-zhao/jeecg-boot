@@ -323,7 +323,7 @@ export const constantRouterMap = [
       {
         path: 'NzSourceTraceFront',
         name: 'NzSourceTraceFront',
-        component: () => import('@/views/nuoze/NzSourceTraceFront')
+        component: () => import(/* webpackChunkName: "user" */'@/views/nuoze/NzSourceTraceFront')
       }
     ]
   },

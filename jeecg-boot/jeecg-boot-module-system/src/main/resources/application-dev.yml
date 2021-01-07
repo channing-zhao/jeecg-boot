@@ -233,8 +233,3 @@ swagger:
 bar:
   domain: http://127.0.0.1:3000/user/NzSourceTraceFront
   format: png
-  {
-    title:'原药材批次',
-    align:"center",
-    dataIndex: 'sourceBatchIds_dictText'
-  },

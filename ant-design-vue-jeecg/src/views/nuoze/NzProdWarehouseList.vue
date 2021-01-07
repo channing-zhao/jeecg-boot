@@ -173,9 +173,14 @@
             }
           },
           {
-           title:'运输方式',
+           title:'操作日期',
            align:"center",
-           dataIndex: 'transport'
+           dataIndex: 'createTime'
+          },
+           {
+           title:'流水号',
+           align:"center",
+           dataIndex: 'unit'
           },
            {
            title:'出入库',

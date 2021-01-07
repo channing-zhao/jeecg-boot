@@ -5,18 +5,13 @@
         <a-row>
           <a-col :span="12">
             <a-form-item label="名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['name']" placeholder="请输入名称"></a-input>
+              <a-input v-decorator="['name',{rules: [{ required: true, message: '请输入名称'}]}]" placeholder="请输入名称"></a-input>
             </a-form-item>
           </a-col>
+          <!--
           <a-col :span="12">
             <a-form-item label="编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['code']" placeholder="请输入编号"></a-input>
-            </a-form-item>
-          </a-col>
-         
-          <a-col :span="12">
-            <a-form-item label="图片" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-image-upload isMultiple v-decorator="['pic']"></j-image-upload>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -24,6 +19,13 @@
               <a-input v-decorator="['brand']" placeholder="请输入品牌"></a-input>
             </a-form-item>
           </a-col>
+         -->
+          <a-col :span="12">
+            <a-form-item label="图片" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-image-upload isMultiple v-decorator="['pic']"></j-image-upload>
+            </a-form-item>
+          </a-col>
+        
           <a-col :span="12">
             <a-form-item label="等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-dict-select-tag type="list" v-decorator="['rank']" :trigger-change="true" dictCode="dengji" placeholder="请选择等级"/>
@@ -161,7 +163,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'name','code','pic','brand','rank','valid','people','isFangfuji','storage','yingyangDesc','gongxiaoDesc'))
+          this.form.setFieldsValue(pick(this.model,'name', 'pic','rank','valid','people','isFangfuji','storage','yingyangDesc','gongxiaoDesc'))
         })
       },
       //渲染流程表单数据
@@ -207,7 +209,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'name','code','pic','brand','rank','valid','people','isFangfuji','storage','yingyangDesc','gongxiaoDesc'))
+        this.form.setFieldsValue(pick(row,'name', 'pic', 'rank','valid','people','isFangfuji','storage','yingyangDesc','gongxiaoDesc'))
       },
     }
   }

@@ -75,4 +75,9 @@ public class NzProdBatch implements Serializable {
     @Excel(name = "二维码", width = 15)
     @ApiModelProperty(value = "二维码")
     private java.lang.String barPath;
+    /**产品ID*/
+    @Excel(name = "产品ID", width = 15, dictTable = "nz_product", dicText = "name", dicCode = "id")
+    @ApiModelProperty(value = "产品ID")
+    @Dict(dictTable = "nz_product", dicText = "name", dicCode = "id")
+    private java.lang.String productId;
 }

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Description: gateway路由管理
@@ -61,6 +62,7 @@ public class SysGatewayRouteController extends JeecgController<SysGatewayRoute, 
 	@GetMapping(value = "/clearRedis")
 	public Result<?> clearRedis() {
 		sysGatewayRouteService.clearRedis();
+
 		return Result.ok("清除成功！");
 	}
 

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.jeecg.common.constant.CacheConstant;
 import org.jeecg.common.exception.JeecgBootException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,6 +27,15 @@ public class RedisUtil {
 	private StringRedisTemplate stringRedisTemplate;
 
 	/**
+	 * 获取key对应的对象
+	 *
+	 * @param str 键
+	 * @return  对象
+	 */
+	public Set keys(String str){
+		return redisTemplate.keys(str);
+	}
+	/**
 	 * 指定缓存失效时间
 	 * 
 	 * @param key  键
@@ -33,6 +43,7 @@ public class RedisUtil {
 	 * @return
 	 */
 	public boolean expire(String key, long time) {
+
 		try {
 			if (time > 0) {
 				redisTemplate.expire(key, time, TimeUnit.SECONDS);
@@ -61,6 +72,7 @@ public class RedisUtil {
 	 * @return true 存在 false不存在
 	 */
 	public boolean hasKey(String key) {
+
 		try {
 			return redisTemplate.hasKey(key);
 		} catch (Exception e) {
@@ -78,7 +90,8 @@ public class RedisUtil {
 	public void del(String... key) {
 		if (key != null && key.length > 0) {
 			if (key.length == 1) {
-				redisTemplate.delete(key[0]);
+				Set set = redisTemplate.keys(key[0]);
+				redisTemplate.delete(set);
 			} else {
 				redisTemplate.delete(CollectionUtils.arrayToList(key));
 			}
@@ -93,6 +106,7 @@ public class RedisUtil {
 	 * @return 值
 	 */
 	public Object get(String key) {
+
 		return key == null ? null : redisTemplate.opsForValue().get(key);
 	}
 
@@ -104,6 +118,11 @@ public class RedisUtil {
 	 * @return true成功 false失败
 	 */
 	public boolean set(String key, Object value) {
+		if(CacheConstant.SYS_USERS_CACHE.contains(key)){
+			System.out.println("set key~~~~~~~~~y~~~~~~~~~~~~"+key);
+		}else{
+			System.out.println("set key~~~~~~~~~n~~~~~~~~~~~~"+key);
+		}
 		try {
 			redisTemplate.opsForValue().set(key, value);
 			return true;
@@ -123,6 +142,7 @@ public class RedisUtil {
 	 * @return true成功 false 失败
 	 */
 	public boolean set(String key, Object value, long time) {
+
 		try {
 			if (time > 0) {
 				redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
@@ -140,7 +160,7 @@ public class RedisUtil {
 	 * 递增
 	 * 
 	 * @param key 键
-	 * @param by  要增加几(大于0)
+	 * @param delta  要增加几(大于0)
 	 * @return
 	 */
 	public long incr(String key, long delta) {
@@ -154,7 +174,7 @@ public class RedisUtil {
 	 * 递减
 	 * 
 	 * @param key 键
-	 * @param by  要减少几(小于0)
+	 * @param delta  要减少几(小于0)
 	 * @return
 	 */
 	public long decr(String key, long delta) {
@@ -464,7 +484,7 @@ public class RedisUtil {
 	 * 
 	 * @param key   键
 	 * @param value 值
-	 * @param time  时间(秒)
+	 * @param value  时间(秒)
 	 * @return
 	 */
 	public boolean lSet(String key, Object value) {
@@ -503,7 +523,7 @@ public class RedisUtil {
 	 * 
 	 * @param key   键
 	 * @param value 值
-	 * @param time  时间(秒)
+	 * @param value  时间(秒)
 	 * @return
 	 */
 	public boolean lSet(String key, List<Object> value) {

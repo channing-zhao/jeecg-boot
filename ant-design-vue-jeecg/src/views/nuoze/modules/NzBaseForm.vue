@@ -1,5 +1,4 @@
 <template>
-  <div style="overflow: auto; height:100%">
   <a-spin :spinning="confirmLoading">
     <j-form-container :disabled="formDisabled">
       <!-- 主表单区域 -->
@@ -7,7 +6,7 @@
         <a-row>
           <a-col :span="12" >
             <a-form-item label="基地名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['name']" placeholder="请输入基地名"></a-input>
+              <a-input v-decorator="['name',{rules: [{ required: true, message: '请输入基地名'}]}]" placeholder="请输入基地名"></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="12" >
@@ -15,28 +14,21 @@
               <j-select-user-by-dep v-decorator="['head']"/>
             </a-form-item>
           </a-col>
-         
-         
+          
+          <a-col :span="12" >
+            <a-form-item label="地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['address']" placeholder="请输入地址"></a-input>
+            </a-form-item>
+          </a-col>
           <a-col :span="12" >
             <a-form-item label="面积" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number v-decorator="['area', validatorRules.area]" placeholder="请输入公顷数" style="width: 30%"/>公顷
             </a-form-item>
           </a-col>
-          <!--
-          <a-col :span="12" >
-            <a-form-item label="占比" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['percentage']"  style="width: 30%"/>%
-            </a-form-item>
-          </a-col>
-           <a-col :span="12" >
-            <a-form-item label="电话" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['tel', validatorRules.tel]" placeholder="请输入电话"></a-input>
-            </a-form-item>
-          </a-col>
-           -->
+          
           <a-col :span="12" >
             <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-textarea v-decorator="['desconte']" rows="3" placeholder="请输入描述"/>
+              <a-textarea v-decorator="['desconte']" rows="4" placeholder="请输入描述"/>
             </a-form-item>
           </a-col>
           <a-col :span="12" >
@@ -44,36 +36,23 @@
               <j-image-upload isMultiple v-decorator="['pic']"></j-image-upload>
             </a-form-item>
           </a-col>
-          <a-col :span="12" >
-            <a-form-item label="地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
-             <a-input v-decorator="['address']" placeholder="请输入地址"  id="place" ></a-input>
-            
-             
-            </a-form-item>
-     
-          </a-col>
-          
         </a-row>
       </a-form>
     </j-form-container>
       <!-- 子表单区域 -->
-      <!--      -->
-    <a-tabs v-model="activeKey" @change="handleChangeTabs">
+    <a-tabs v-model="activeKey" @change="handleChangeTabs" style="show:none">
       <a-tab-pane tab="" :key="refKeys[0]" :forceRender="true">
-        <j-editable-table
+         <j-editable-table
           :ref="refKeys[0]"
-         
-          
+          :loading="nzAreaTable.loading"
+          :columns="nzAreaTable.columns"
+          :dataSource="nzAreaTable.dataSource"
           :maxHeight="300"
           :disabled="formDisabled"
-          :rowNumber="true"
-          :rowSelection="false"
-          :actionButton="false"/>
+         />
       </a-tab-pane>
     </a-tabs>
-
   </a-spin>
-  </div>
 </template>
 
 <script>
@@ -88,11 +67,6 @@
   import JSelectUserByDep from '@/components/jeecgbiz/JSelectUserByDep'
   import JEditor from '@/components/jeecg/JEditor'
 
-  let map, marker, polygon, drawingManager, lngLat,ap;
-  let path = [];// 设置回显数据参数
-  let overlaysArray = []
-  import axios from 'axios'
-
   export default {
     name: 'NzBaseForm',
     mixins: [JEditableTableMixin],
@@ -104,19 +78,6 @@
     },
     data() {
       return {
-      
-        notify:'',
-        input:'',
-        url: {
-          list: "/trace/sourceBatch"
-        },
-        dictOptions:{},
-        resultList:{},
-        optnum:'',
-        sourceIds_dictText:'',
-        sourceBatchIds_dictText:'',
-
-
         labelCol: {
           xs: { span: 24 },
           sm: { span: 6 },
@@ -156,7 +117,14 @@
         nzAreaTable: {
           loading: false,
           dataSource: [],
-          columns: []
+          columns: [
+            {
+              title: '',
+              key: 'name',
+              
+              defaultValue: '',
+            }
+          ]
         },
         url: {
           add: "/nz/nzBase/add",
@@ -211,9 +179,6 @@
       //如果是流程中表单，则需要加载流程表单data
       this.showFlowData();
     },
-     mounted() {
-        
-    },
     methods: {
       addBefore(){
         this.form.resetFields()
@@ -225,14 +190,14 @@
       },
       /** 调用完edit()方法之后会自动调用此方法 */
       editAfter() {
-        let fieldval = pick(this.model,'name','head','area','desconte','pic','address')
+        let fieldval = pick(this.model,'name','head','address','area','desconte','pic')
         this.$nextTick(() => {
           this.form.setFieldsValue(fieldval)
         })
         // 加载子表数据
         if (this.model.id) {
           let params = { id: this.model.id }
-          this.requestSubTableData(this.url.nzArea.list, params, this.nzAreaTable)
+          //this.requestSubTableData(this.url.nzArea.list, params, this.nzAreaTable)
         }
       },
       /** 整理成formData */
@@ -258,37 +223,9 @@
         this.$message.error(msg)
       },
      popupCallback(row){
-       this.form.setFieldsValue(pick(row,'name','head','area','desconte','pic','address'))
+       this.form.setFieldsValue(pick(row,'name','head','address','area','desconte','pic'))
      },
 
-   
-        getTrace(){
-          //1原药材, 2产品 
-          let type = this.$route.query.type;
-          //批次
-          let batchid = this.$route.query.batchid;
-          
-          let batchURL = this.url.list;
-          
-          if(type != '1'){
-            batchURL = "/trace/productBatch";
-          } 
-          let params = {batchid:batchid};
-          getAction(batchURL,params).then((res)=>{
-            console.info(res.result);
-            if(res.success){
-              this.resultList = res.result.records;
-              //console.info(this.resultList[0].optnum);
-              this.optnum = this.resultList[0].optnum;
-              this.sourceIds_dictText= this.resultList[0].sourceIds_dictText;
-              this.sourceBatchIds_dictText= this.resultList[0].sourceBatchIds_dictText;
-            }
-          });
-        }
     }
   }
 </script>
-
-<style scoped>
-
-</style>

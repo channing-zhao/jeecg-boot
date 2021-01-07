@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.jeecg.common.constant.CacheConstant.SYS_DICT_TABLE_CACHE;
+
 /**
  * <p>
  * 字典表 服务实现类
@@ -74,6 +76,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 			res.put(d.getDictCode(), dictModelList);
 		}
 		log.info("-------登录加载系统字典-----" + res.toString());
+
 		return res;
 	}
 
@@ -122,7 +125,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = CacheConstant.SYS_DICT_TABLE_CACHE)
+	@Cacheable(value = SYS_DICT_TABLE_CACHE)
 	public String queryTableDictTextByKey(String table,String text,String code, String key) {
 		log.info("无缓存dictTable的时候调用这里！");
 		return sysDictMapper.queryTableDictTextByKey(table,text,code,key);

@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface INzSourceTraceService extends IService<NzSourceTrace> {
     public IPage<NzSourceTrace> SelectBycode(Page<NzSourceTrace> page, String batchid);
+    public IPage<NzSourceTrace> SelectByPrdcode(Page<NzSourceTrace> page, String batchid);
 }

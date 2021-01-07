@@ -59,8 +59,9 @@ public class NzSourceBatch implements Serializable {
     @ApiModelProperty(value = "批次名称")
     private java.lang.String name;
     /**原药材ID*/
-    @Excel(name = "原药材ID", width = 15)
+    @Excel(name = "原药材ID", width = 15, dictTable = "nz_source", dicText = "name", dicCode = "id")
     @ApiModelProperty(value = "原药材ID")
+    @Dict(dictTable = "nz_source", dicText = "name", dicCode = "id")
     private java.lang.String sourceId;
     /**原药材名称*/
     @Excel(name = "原药材名称", width = 15)

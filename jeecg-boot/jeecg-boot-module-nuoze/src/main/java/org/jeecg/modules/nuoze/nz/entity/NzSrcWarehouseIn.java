@@ -68,15 +68,20 @@ public class NzSrcWarehouseIn implements Serializable {
 	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")
     private java.lang.Double amount;
-	/**单位*/
-	@Excel(name = "单位", width = 15, dicCode = "unit")
-	@Dict(dicCode = "unit")
-    @ApiModelProperty(value = "单位")
+	/**流水号*/
+	@Excel(name = "流水号", width = 15)
+	//@Dict(dicCode = "unit")
+    @ApiModelProperty(value = "流水号")
     private java.lang.String unit;
 	/**出入*/
 	@Excel(name = "出入", width = 15)
     @ApiModelProperty(value = "出入")
     private java.lang.Integer type;
+
+    /**运输方式*/
+    @Excel(name = "运输方式", width = 15 )
+    @ApiModelProperty(value = "运输方式")
+    private java.lang.String transport;
 
     /**
      * 出入库转为库存

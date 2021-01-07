@@ -127,27 +127,31 @@
             align:"center",
             dataIndex: 'name'
           },
-          {
+         
+            /**
+             {
             title:'编号',
             align:"center",
             dataIndex: 'code'
           },
-            /**
          {
             title:'类型',
             align:"center",
             dataIndex: 'typeId'
+         }
        {
             title:'图片',
             align:"center",
             dataIndex: 'pic',
             scopedSlots: {customRender: 'imgSlot'}
-          },**/
-          {
+          },
+           {
             title:'品牌',
             align:"center",
             dataIndex: 'brand'
           },
+          **/
+         
           {
             title:'等级',
             align:"center",

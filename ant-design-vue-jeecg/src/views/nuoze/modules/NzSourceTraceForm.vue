@@ -5,23 +5,23 @@
         <a-row>
          <a-col :span="12">
             <a-form-item label="工艺" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['node']" :trigger-change="true" dictCode="yclsygc" placeholder="请选择工艺"/>
+              <j-dict-select-tag type="list" v-decorator="['node',{rules: [{ required: true, message: '请选择工艺'}]}]"  :trigger-change="true" dictCode="yclsygc" placeholder="请选择工艺"/>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item label="流水号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['optnum']" placeholder="按批次规则填写流水号"></a-input>
+              <a-input v-decorator="['optnum',{rules: [{ required: true, message: '请输入流水号'}]}]"  placeholder="按批次规则填写流水号"></a-input>
             </a-form-item>
           </a-col>
           
            <a-col :span="12">
             <a-form-item label="原药材批次" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-search-select-tag v-decorator="['sourceBatchIds']" dict="nz_source_batch,name,id" />
+              <j-search-select-tag v-decorator="['sourceBatchIds',{rules: [{ required: true, message: '请选择批次'}]}]"  dict="nz_source_batch,name,id" />
             </a-form-item>
           </a-col>
             <a-col :span="12">
             <a-form-item label="原药材" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-search-select-tag v-decorator="['sourceIds']" dict="nz_source,name,id" />
+              <j-search-select-tag v-decorator="['sourceIds',{rules: [{ required: true, message: '请选择原药材'}]}]"  dict="nz_source,name,id" />
             </a-form-item>
           </a-col>
           <a-col :span="12">

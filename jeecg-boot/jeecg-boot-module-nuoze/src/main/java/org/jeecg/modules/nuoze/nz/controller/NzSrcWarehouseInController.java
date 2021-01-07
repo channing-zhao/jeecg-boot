@@ -114,6 +114,7 @@ public class NzSrcWarehouseInController extends JeecgController<NzSrcWarehouseIn
 		}else {
 			return Result.error("库存不足！");
 		}
+		System.out.println("原药材入库数==="+nzSrcWarehouseIn.getAmount());
 		nzSrcWarehouseInService.save(nzSrcWarehouseIn);
 		return Result.OK("添加成功！");
 	}

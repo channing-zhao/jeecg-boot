@@ -60,7 +60,7 @@ public class NzProdWarehouse implements Serializable {
     @ApiModelProperty(value = "产品批次")
     private java.lang.String productBatchIds;
     /**产品*/
-    @Excel(name = "产品批次", width = 15, dictTable = "nz_product", dicText = "name", dicCode = "id")
+    @Excel(name = "产品", width = 15, dictTable = "nz_product", dicText = "name", dicCode = "id")
     @Dict(dictTable = "nz_product", dicText = "name", dicCode = "id")
     @ApiModelProperty(value = "产品")
     private java.lang.String productId;
@@ -68,15 +68,19 @@ public class NzProdWarehouse implements Serializable {
 	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")
     private java.lang.Double amount;
-	/**单位*/
-	@Excel(name = "单位", width = 15, dicCode = "unit")
-	@Dict(dicCode = "unit")
-    @ApiModelProperty(value = "单位")
+	/**流水号*/
+	@Excel(name = "流水号", width = 15 )
+    @ApiModelProperty(value = "流水号")
     private java.lang.String unit;
 	/**出库入库标志*/
 	@Excel(name = "单位", width = 15)
     @ApiModelProperty(value = "出库入库标志")
     private java.lang.Integer type;
+
+    /**运输方式*/
+    @Excel(name = "运输方式", width = 15 )
+    @ApiModelProperty(value = "运输方式")
+    private java.lang.String transport;
     /**
      * 出入库转为库存
      * @return

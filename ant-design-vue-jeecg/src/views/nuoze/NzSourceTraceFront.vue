@@ -1,77 +1,64 @@
 <template>
- 
-  <a-timeline>
-    
-    <div style="font-size: 20px;">产品:{{sourceIds_dictText}} 批次:{{sourceBatchIds_dictText}} 流水号:{{optnum}}</div>
-    <div><h1>----------------------------</h1></div>
-    <a-timeline-item v-for="item in resultList"> {{item.createBy_dictText}} 于 {{item.createTime}}  {{item.node_dictText}}</a-timeline-item>
-
-  </a-timeline>
-
- 
-</template>
-<template>
-   <div class="padd20">
-        <mapselect :mapcenter="centerLatLng" :oldmarker="oldMarker" @mapclick="pointChange"></mapselect>
-
-</div>
+<div>
+    <a-timeline>
+      <div v-if="resultList.length>0">
+        <div style="font-size: 20px;">产品:{{sourceIds_dictText}} 批次:{{sourceBatchIds_dictText}} </div>
+        <div><h1>-------------------------</h1></div>
+      </div>  
+      <div v-else="">
+      
+        <div><h1>暂无溯源信息</h1></div>
+      </div>  
+      <a-timeline-item v-for="item in resultList"> {{item.createTime}} {{item.createBy_dictText}}   {{item.node_dictText}}</a-timeline-item>
+    </a-timeline>
+      <div><h1>-------------------------</h1></div>
+      <a-timeline>
+     <div v-for="(value, key) in resultMap" :key="key" >
+      <span >原药材批次:{{key}}</span>
+      
+      <a-timeline-item v-for="item in value"> {{item.createTime}}  {{item.createBy_dictText}}  {{item.node_dictText}}</a-timeline-item>
+      <div><span>&nbsp;</span></div>
+    </div>
+     </a-timeline>
+  </div>
 </template>
 
 <script>
-
   import '@/assets/less/TableExpand.less'
   import NzSourceTraceModal from './modules/NzSourceTraceModal'
- 
-
-  import qqMapSelectPoint from'./modules/selectPoint.vue'
-
+  import {  getAction } from '@/api/manage'
   export default {
-    name: 'NzSourceTraceFront',
-   
+    name: 'NzSourceTraceFront',  
     components: {
       NzSourceTraceModal,
-      mapselect: qqMapSelectPoint
+      getAction
     },
     data () {
       return {
         description: '溯源页面',
        
-        notify:'',
-        input:'',
         url: {
-          list: "/trace/sourceBatch"
+          list: "/trace/sourceBatch",
+          listSrcTraceByPrdBatch:"/trace/prdSourcetrace"
         },
         dictOptions:{},
         resultList:{},
         optnum:'',
         sourceIds_dictText:'',
         sourceBatchIds_dictText:'',
-
-        pointName: '郑州',
-        qqmap: null,
-        centerLatLng: '34.759666,113.648071',
-        oldMarker: '34.759666,113.648071',
-        newMarker: null
-
+        resultMap:{},
       }
     },
     created() {
-      //this.getTrace()
-     
+      this.listTrace();
     },
     computed: {
-      
-    },
-    mounted() {
-         
+     
     },
     methods: {
       initDictConfig(){
       },
-       pointChange(ev){
-          console.log('捕获到点击坐标', ev)
-      },
-        getTrace(){
+      listTrace(){
           //1原药材, 2产品 
           let type = this.$route.query.type;
           //批次
@@ -81,26 +68,62 @@
           
           if(type != '1'){
             batchURL = "/trace/productBatch";
-          } 
+            this.listSrcTraceByPrdBatch(batchid);
+          }
+          
           let params = {batchid:batchid};
           getAction(batchURL,params).then((res)=>{
-            console.info(res.result);
-            if(res.success){
+           
+            if(res.success && res.result.total > 0){
               this.resultList = res.result.records;
-              //console.info(this.resultList[0].optnum);
+             // console.info(this.resultList[0]);
               this.optnum = this.resultList[0].optnum;
-              this.sourceIds_dictText= this.resultList[0].sourceIds_dictText;
-              this.sourceBatchIds_dictText= this.resultList[0].sourceBatchIds_dictText;
+              if(type == '1'){
+                this.sourceIds_dictText= this.resultList[0].sourceIds_dictText;
+                this.sourceBatchIds_dictText= this.resultList[0].sourceBatchIds_dictText;
+              }else{
+                this.sourceIds_dictText= this.resultList[0].productId_dictText;
+                this.sourceBatchIds_dictText= this.resultList[0].productBatchId_dictText;
+              }
+              
+            }else{
+              this.optnum = "";
+              this.sourceIds_dictText= "";
+              this.sourceBatchIds_dictText= "";
             }
           });
-        }
+      },
+      listSrcTraceByPrdBatch(batchid){
+        let params = {batchid:batchid};
+        let batchURL = this.url.listSrcTraceByPrdBatch;
+          getAction(batchURL,params).then((res)=>{
+            if(res.success ){
+              
+              //将分页中的records   转为map
+              let map = {}
+              let list = []
+              res.result.records.forEach(row => {
+                list = map[row.sourceBatchIds_dictText];
+                if(list){
+                  list.push({'createBy_dictText':row.createBy_dictText,'node_dictText':row.node_dictText,'createTime':row.createTime})
+                 // map[row.sourceBatchIds_dictText].push([{'createBy_dictText':row.createBy_dictText,'node_dictText':row.node_dictText,'createTime':row.createTime}])
+                }else{
+                  list = [{'createBy_dictText':row.createBy_dictText,'node_dictText':row.node_dictText,'createTime':row.createTime}]
+                 
+                }
+                 map[row.sourceBatchIds_dictText]= list
+                //map[row.id] = {name: row.name, content: row.content}
+              })
+              this.resultMap = map;
+            } 
+            
+          });
+      }
+
     }
   }
 </script>
 <style scoped>
   @import '~@assets/less/common.less';
-.qqmap { width: 800px;
-        height: 300px;
-    }
 
 </style>

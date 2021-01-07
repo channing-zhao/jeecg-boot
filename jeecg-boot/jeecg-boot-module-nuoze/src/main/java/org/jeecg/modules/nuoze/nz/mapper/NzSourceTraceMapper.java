@@ -2,6 +2,7 @@ package org.jeecg.modules.nuoze.nz.mapper;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.nuoze.nz.entity.NzSourceTrace;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -14,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface NzSourceTraceMapper extends BaseMapper<NzSourceTrace> {
 
+    List<NzSourceTrace> SelectByPrdcode(@Param("batchid") String batchid);
 }

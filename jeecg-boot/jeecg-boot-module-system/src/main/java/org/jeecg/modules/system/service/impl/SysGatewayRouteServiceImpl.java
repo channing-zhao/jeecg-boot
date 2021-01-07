@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Description: gateway路由管理
@@ -79,6 +80,9 @@ public class SysGatewayRouteServiceImpl extends ServiceImpl<SysGatewayRouteMappe
     @Override
     public void clearRedis() {
         redisTemplate.opsForValue().set(CacheConstant.GATEWAY_ROUTES,  null);
+        String s ="sys:cache:dict*";
+        Set set = redisTemplate.keys(s);
+        redisTemplate.delete(set);
     }
 
     @Override

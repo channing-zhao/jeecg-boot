@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jeecg.common.util.RedisUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -57,6 +58,8 @@ public class NzBaseController {
 	private INzBaseService nzBaseService;
 	@Autowired
 	private INzAreaService nzAreaService;
+	 @Autowired
+	 private RedisUtil redisUtil;
 	
 	/**
 	 * 分页列表查询
@@ -77,6 +80,7 @@ public class NzBaseController {
 		QueryWrapper<NzBase> queryWrapper = QueryGenerator.initQueryWrapper(nzBase, req.getParameterMap());
 		Page<NzBase> page = new Page<NzBase>(pageNo, pageSize);
 		IPage<NzBase> pageList = nzBaseService.page(page, queryWrapper);
+
 		return Result.OK(pageList);
 	}
 	
@@ -113,6 +117,7 @@ public class NzBaseController {
 			return Result.error("未找到对应数据");
 		}
 		nzBaseService.updateMain(nzBase, nzBasePage.getNzAreaList());
+
 		return Result.OK("编辑成功!");
 	}
 	

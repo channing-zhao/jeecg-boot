@@ -3,7 +3,6 @@ package org.jeecg.modules.nuoze.nz.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.jeecg.modules.nuoze.nz.entity.NzSourceInventory;
 import org.jeecg.modules.nuoze.nz.entity.NzSourceTrace;
 import org.jeecg.modules.nuoze.nz.mapper.NzSourceTraceMapper;
 import org.jeecg.modules.nuoze.nz.service.INzSourceTraceService;
@@ -22,7 +21,8 @@ import java.util.List;
  */
 @Service
 public class NzSourceTraceServiceImpl extends ServiceImpl<NzSourceTraceMapper, NzSourceTrace> implements INzSourceTraceService {
-
+    @Autowired
+    private NzSourceTraceMapper nzSourceTraceMapper;
 
     /**
      * 根据批次号查询溯源信息,按时间顺序排
@@ -31,9 +31,14 @@ public class NzSourceTraceServiceImpl extends ServiceImpl<NzSourceTraceMapper, N
         QueryWrapper<NzSourceTrace> wrapper = new QueryWrapper<>();
         wrapper.eq("source_batch_ids", batchid);
         wrapper.orderByAsc("create_time");
-
         return  baseMapper.selectPage(page, wrapper);
-
     }
+    /**
+     * 根据产品批次号查询原药材溯源信息,按时间顺序排
+     */
+    public IPage<NzSourceTrace> SelectByPrdcode(Page<NzSourceTrace> page, String batchid) {
 
+        page.setRecords(nzSourceTraceMapper.SelectByPrdcode(batchid));
+        return  page;
+    }
 }

@@ -4,19 +4,19 @@
       <a-form :form="form" slot="detail">
         <a-row>
           <a-col :span="12">
-            <a-form-item label="名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['name']" placeholder="请输入名称"></a-input>
+            <a-form-item label="批次号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['name',{rules: [{ required: true, message: '请输入批次号'}]}]" placeholder="请输入批次号"></a-input>
             </a-form-item>
           </a-col>
          <a-col :span="12">
             <a-form-item label="产品" :labelCol="labelCol" :wrapperCol="wrapperCol">
-             <j-dict-select-tag type="list"  v-decorator="['productId']" :trigger-change="true" dictCode="nz_product,name,id" placeholder="请选择产品"/>
+             <j-dict-select-tag type="list"  v-decorator="['productId',{rules: [{ required: true, message: '请选择产品'}]}]" :trigger-change="true" dictCode="nz_product,name,id" placeholder="请选择产品"/>
             </a-form-item>
           </a-col>
 
           <a-col :span="12">
             <a-form-item label="原药材批次" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-multi-select-tag type="list_multi" v-decorator="['sourceBatchIds']" :trigger-change="true" dictCode="nz_source_batch,name,id" placeholder="请选择原药材批次"/>
+              <j-multi-select-tag type="list_multi" v-decorator="['sourceBatchIds',{rules: [{ required: true, message: '请选择原药材批次'}]}]" :trigger-change="true" dictCode="nz_source_batch,name,id" placeholder="请选择原药材批次"/>
             </a-form-item>
           </a-col>
 
