@@ -158,7 +158,7 @@
       this.showFlowData();
     },
     methods: {
-      //改变批次自动匹配原材料
+      //改变批次自动匹配原药材
       onChangeBatch(value){
        // console.info("change==>"+value)
         let params = {sourceId:value,pageSize:50};

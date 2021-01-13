@@ -160,6 +160,7 @@
             title:'原药材批次',
             align:"center",
             dataIndex: 'sourceBatchIds_dictText'
+            
           },
            {
             title: '二维码',

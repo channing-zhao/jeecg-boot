@@ -11,7 +11,6 @@ export const asyncRouterMap = [
     name: 'dashboard',
     component: TabLayout,
     meta: { title: '首页' },
-    redirect: '/nuoze/NzBaseList',
     children: [
 
       // // dashboard
